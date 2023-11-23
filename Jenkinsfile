@@ -1,11 +1,6 @@
 pipeline {
     agent any
     stages {
-        stage('Test') {
-            steps {
-                sh 'node --version'
-            }
-        }
         stage('Build') {
             steps {
                 // Pull the Docker image if not already available
