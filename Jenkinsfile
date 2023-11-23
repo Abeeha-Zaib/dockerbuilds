@@ -7,7 +7,7 @@ pipeline {
                 sh 'docker pull --platform=linux/arm64 ubuntu:latest'
             
                 // Run the build commands inside the Docker container
-                sh 'docker run -it --platform=linux/arm64 ubuntu:latest'
+                sh 'docker run --platform=linux/arm64 ubuntu:latest'
             }
         }
     }
