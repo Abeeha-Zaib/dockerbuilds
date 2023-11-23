@@ -5,9 +5,8 @@ pipeline {
         stage('Pull and Run ARM64 Container') {
             steps {
                 script {
-
-                    // Run an interactive ARM64 container
-                    sh 'docker run --platform=linux/arm64/v8 ubuntu:latest /bin/bash'
+                    // Run apt update and upgrade inside the ARM64 container
+                    sh 'docker run --platform=linux/arm64/v8 ubuntu:latest /bin/bash -c "apt update && apt upgrade -y"'
                 }
             }
         }
