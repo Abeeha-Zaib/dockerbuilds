@@ -5,8 +5,6 @@ pipeline {
         stage('Setup QEMU and Docker') {
             steps {
                 script {
-                    // Install QEMU and binfmt-support
-                    sh 'apt-get update && sudo apt-get install -y qemu qemu-user-static binfmt-support'
 
                     // Enable QEMU for ARM64 binaries
                     sh 'sudo update-binfmts --enable qemu-aarch64'
