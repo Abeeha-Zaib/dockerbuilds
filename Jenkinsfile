@@ -1,13 +1,30 @@
 pipeline {
     agent any
+
     stages {
-        stage('Arm Container') {
+        stage('Setup QEMU and Docker') {
             steps {
-                // Pull the Docker image if not already available
-                sh 'docker pull --platform=linux/arm64 ubuntu:latest'
-            
-                // Run the build commands inside the Docker container
-                sh 'docker run --platform=linux/arm64 ubuntu:latest /bin/bash'
+                script {
+                    // Install QEMU and binfmt-support
+                    sh 'sudo apt-get update && sudo apt-get install -y qemu qemu-user-static binfmt-support'
+
+                    // Enable QEMU for ARM64 binaries
+                    sh 'sudo update-binfmts --enable qemu-aarch64'
+
+                    // Install Docker multi-architecture support
+                    sh 'docker run --rm --privileged multiarch/qemu-user-static --reset -p yes'
+                }
+            }
+        }
+        stage('Pull and Run ARM64 Container') {
+            steps {
+                script {
+                    // Pull the ARM64-based Ubuntu image
+                    sh 'docker pull --platform=linux/arm64/v8 ubuntu:latest'
+
+                    // Run an interactive ARM64 container
+                    sh 'docker run --platform=linux/arm64/v8 -it ubuntu:latest /bin/bash'
+                }
             }
         }
     }
