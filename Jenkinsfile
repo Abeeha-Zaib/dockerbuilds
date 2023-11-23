@@ -7,7 +7,7 @@ pipeline {
                 script {
 
                     // Enable QEMU for ARM64 binaries
-                    sh 'sudo -S update-binfmts --enable qemu-aarch64'
+                   // sh 'sudo update-binfmts --enable qemu-aarch64'
 
                     // Install Docker multi-architecture support
                     sh 'docker run --rm --privileged multiarch/qemu-user-static --reset -p yes'
